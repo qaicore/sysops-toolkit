@@ -1,0 +1,22 @@
+{
+    "generated_at": "2026-03-10T04:08:26.792572",
+    "total_errors": 2,
+    "total_warnings": 1,
+    "findings": [
+        {
+            "line_number": 1,
+            "severity": "ERROR",
+            "message": "Database connection timeout after 30s"
+        },
+        {
+            "line_number": 2,
+            "severity": "WARN",
+            "message": "Retry attempt 1 of 3"
+        },
+        {
+            "line_number": 4,
+            "severity": "ERROR",
+            "message": "Failed to authenticate user admin"
+        }
+    ]
+}
