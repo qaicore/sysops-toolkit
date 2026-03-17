@@ -2,14 +2,6 @@ import socket
 import argparse
 import time
 
-parser = argparse.ArgumentParser()
-parser.add_argument("--host", required=True) 
-parser.add_argument("--ports", required=True) 
-args = parser.parse_args()
-
-args.ports = args.ports.split(",")
-int_ports = [int(port) for port in args.ports]
-
 def check_port(host, port, timeout=2):
     start = time.time()
     try:
@@ -21,16 +13,21 @@ def check_port(host, port, timeout=2):
     except (socket.timeout, ConnectionRefusedError, OSError):
         return False, None, None
 
-for port in int_ports:
-    result = check_port(args.host, port)
-    if result[2]:
-        print(f"{args.host}:{port} - {result[2]}")
-        break
-    if result[0]:
-        print(f"{args.host}:{port} - open ({result[1]}ms)")
-    if result[1] is None:
-        print(f"{args.host}:{port} - closed")
 
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--host", required=True)
+    parser.add_argument("--ports", required=True)
+    args = parser.parse_args()
 
+    int_ports = [int(port) for port in args.ports.split(",")]
 
-
+    for port in int_ports:
+        result = check_port(args.host, port)
+        if result[2]:
+            print(f"{args.host}:{port} - {result[2]}")
+            break
+        if result[0]:
+            print(f"{args.host}:{port} - open ({result[1]}ms)")
+        else:
+            print(f"{args.host}:{port} - closed")
